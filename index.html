@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDXBD | পোর্টফোলিও</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --header-bg: linear-gradient(135deg, #2c3e50, #34495e);
+            --nav-bg: #1abc9c;
+            --progress-bg: #e0f2f1;
+            --progress-fill: #1abc9c;
+            --btn-bg: #1abc9c;
+            --quote-bg: #f8f9fa;
+            --modal-overlay: rgba(0, 0, 0, 0.6);
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --text-color: #ffffff;
+            --header-bg: linear-gradient(135deg, #0f3460, #16213e);
+            --nav-bg: #0f3460;
+            --progress-bg: #0f3460;
+            --progress-fill: #f39c12;
+            --btn-bg: #e74c3c;
+            --quote-bg: #0f3460;
+            --modal-overlay: rgba(0, 0, 0, 0.8);
+        }
+
+        /* স্মুথ ট্রানজিশন অ্যানিমেশন */
+        body, .hero-card, .skills-card, .projects-card, .quote-card, .weather-card, .testimonial-card,
+        .project-item, .search-input, header, nav, .quote-box, .weather-box, .modal-content, .floating-menu {
+            transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 2px;
+        }
+
+        .theme-btn {
+            position: absolute;
+            right: 20px;
+            top: 25px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.05);
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #f1c40f;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                justify-content: space-between;
+            }
+            .hamburger {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--nav-bg);
+                text-align: center;
+                padding: 15px 0;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links a {
+                padding: 10px 0;
+            }
+        }
+
+        main {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-card, .skills-card, .projects-card, .quote-card, .weather-card, .testimonial-card {
+            background-color: var(--card-bg);
+            padding: 35px;
+            width: 550px;
+            max-width: 90%;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .hero-card h2, .skills-card h2, .projects-card h2, .quote-card h2, .weather-card h2, .testimonial-card h2 {
+            color: var(--nav-bg);
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .search-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 550px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--nav-bg);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-size: 15px;
+            outline: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .search-input:focus {
+            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
+        }
+
+        .cv-btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .cv-btn {
+            background-color: var(--btn-bg);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .cv-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .visitor-counter-box {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--nav-bg);
+            background-color: var(--quote-bg);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .testimonial-slider {
+            position: relative;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .testimonial-item {
+            display: none;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .testimonial-item.active {
+            display: block;
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--nav-bg);
+        }
+
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .testimonial-btn {
+            background-color: var(--nav-bg);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .testimonial-btn:hover {
+            opacity: 0.8;
+        }
+
+        .skill-item {
+            margin-bottom: 15px;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar-container {
+            background-color: var(--progress-bg);
+            border-radius: 10px;
+            height: 12px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background-color: var(--progress-fill);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--nav-bg);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--nav-bg);
+            color: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .project-item {
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .project-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .project-item h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: var(--text-color);
+        }
+
+        .project-item p {
+            font-size: 13px;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .project-btn, .quote-btn {
+            display: inline-block;
+            background-color: var(--btn-bg);
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .project-btn:hover, .quote-btn:hover {
+            opacity: 0.85;
+        }
+
+        .quote-box, .weather-box {
+            background-color: var(--quote-bg);
+            padding: 20px;
+            border-left: 5px solid var(--nav-bg);
+            border-radius: 6px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .quote-text {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .quote-author {
+            font-size: 14px;
+            font-weight: bold;
+            opacity: 0.85;
+        }
+
+        .quote-btn-container {
+            text-align: center;
+        }
+
+        .weather-info h3 {
+            margin: 0 0 10px 0;
+            color: var(--nav-bg);
+            font-size: 20px;
+        }
+
+        .weather-temp {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .weather-desc {
+            font-size: 15px;
+            text-transform: capitalize;
+            opacity: 0.85;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-overlay);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 30px;
+            border-radius: 12px;
+            width: 450px;
+            max-width: 85%;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--text-color);
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .modal-body {
+            margin: 20px 0;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* ফ্লোটিং কনটাক্ট উইজেট স্টাইল */
+        .floating-widget-container {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .floating-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background-color: var(--nav-bg);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .floating-menu {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 12px;
+            background-color: var(--card-bg);
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .floating-menu.active {
+            display: flex;
+        }
+
+        .floating-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .floating-link:hover {
+            background-color: var(--bg-color);
+            color: var(--nav-bg);
+        }
+
+        /* টোস্ট নোটিফিকেশন স্টাইল */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #2ecc71;
+            color: white;
+            text-align: center;
+            border-radius: 25px;
+            padding: 12px 20px;
+            position: fixed;
+            z-index: 1001;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.4s ease, bottom 0.4s ease, visibility 0.4s;
+        }
+
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 40px;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>RDXBD</h1>
+        <button class="theme-btn" onclick="toggleTheme()">🌙 মোড পরিবর্তন</button>
+    </header>
+
+    <nav>
+        <button class="hamburger" id="hamburger">☰</button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">হোম</a>
+            <a href="about.html">আমার সম্পর্কে</a>
+            <a href="contact.html">যোগাযোগ</a>
+            <a href="todo.html">টু-ডু লিস্ট</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 প্রজেক্ট বা স্কিল সার্চ করুন..." onkeyup="searchContent()">
+        </div>
+
+        <div class="hero-card searchable-card" data-keywords="rdxbd বায়ো নাম ওয়েব ডেভেলপমেন্ট যাত্রা html css javascript cv resume">
+            <h2 style="text-align: center; margin-bottom: 5px; color: var(--text-color);">RDXBD</h2>
+            <p style="text-align: center; color: var(--nav-bg); font-weight: bold; font-size: 16px; margin-top: 0;">ফ্রন্টএন্ড ডেভেলপার</p>
+            <p style="text-align: center; opacity: 0.85;">আমি সেমানটিক HTML, আধুনিক CSS এবং ইন্টারেক্টিভ জাভাস্ক্রিপ্ট ব্যবহার করে রেসপনসিভ ও আকর্ষণীয় ওয়েব অ্যাপ্লিকেশন তৈরি করতে ভালোবাসি।</p>
+            
+            <div class="cv-btn-container">
+                <button class="cv-btn" onclick="downloadCV()">📄 সিভি (CV) ডাউনলোড করুন</button>
+            </div>
+
+            <div class="visitor-counter-box">
+                👀 মোট ভিজিটর সংখ্যা: <span id="visitorCount">0</span> জন
+            </div>
+        </div>
+
+        <div class="weather-card searchable-card" data-keywords="লাইভ আবহাওয়া weather dinajpur তাপমাত্রা">
+            <h2>লাইভ আবহাওয়া (Dinajpur)</h2>
+            <div class="weather-box">
+                <div class="weather-info" id="weatherInfo">
+                    <h3>লোডিং আবহাওয়া...</h3>
+                    <div class="weather-temp">--°C</div>
+                    <div class="weather-desc">তথ্য ফেচ করা হচ্ছে</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote-card searchable-card" data-keywords="আজকের অনুপ্রেরণা quote api উক্তি">
+            <h2>আজকের অনুপ্রেরণা (Live API)</h2>
+            <div class="quote-box">
+                <div class="quote-text" id="quoteText">উক্তি লোড হচ্ছে...</div>
+                <div class="quote-author" id="quoteAuthor"></div>
+            </div>
+            <div class="quote-btn-container">
+                <button class="quote-btn" onclick="getNewQuote()">নতুন উক্তি দেখুন 🔄</button>
+            </div>
+        </div>
+
+        <div class="testimonial-card searchable-card" data-keywords="টেস্টিনোমিয়াল ফিডব্যাক রিভিউ testimonials">
+            <h2>ক্লায়েন্ট ও সহকর্মীদের মতামত</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial-item active">
+                    <p class="testimonial-text">"ওয়েব ডিজাইন এবং কোডের কোয়ালিটি সত্যিই চমৎকার। প্রজেক্টগুলো সময়মতো এবং অত্যন্ত নিখুঁতভাবে সম্পন্ন করা হয়েছে।"</p>
+                    <div class="testimonial-author">- প্রজেক্ট ম্যানেজার, টেক সলিউশন</div>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">"জাভাস্ক্রিপ্ট ইন্টারঅ্যাকশন এবং ইউজার ইন্টারফেস ডিজাইন খুবই গোছানো ও রেসপনসিভ। কাজ করে দারুণ সন্তুষ্ট!"</p>
+                    <div class="testimonial-author">- সিনিয়র ওয়েব ডেভেলপার</div>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">"একটি চমৎকার পোর্টফোলিও ওয়েবসাইট যা আধুনিক ওয়েব স্ট্যান্ডার্ড মেনে খুব সুন্দরভাবে তৈরি করা হয়েছে।"</p>
+                    <div class="testimonial-author">- টেক কনসালটেন্ট</div>
+                </div>
+
+                <div class="testimonial-controls">
+                    <button class="testimonial-btn" onclick="prevTestimonial()">❮ আগের</button>
+                    <button class="testimonial-btn" onclick="nextTestimonial()">পরের ❯</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="skills-card searchable-card" data-keywords="আমার দক্ষতা skills html5 css3 javascript responsive design">
+            <h2>আমার দক্ষতা (Skills)</h2>
+            
+            <div class="skill-item">
+                <div class="skill-info">
+                    <span>HTML5</span>
+                    <span>90%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 90%;"></div>
+                </div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-info">
+                    <span>CSS3</span>
+                    <span>85%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 85%;"></div>
+                </div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-info">
+                    <span>JavaScript</span>
+                    <span>75%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 75%;"></div>
+                </div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-info">
+                    <span>Responsive Design</span>
+                    <span>80%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 80%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="projects-card searchable-card" data-keywords="আমার প্রজেক্টসমূহ projects টু-ডু লিস্ট যোগাযোগ ফর্ম">
+            <h2>আমার প্রজেক্টসমূহ</h2>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterProjects('all')">সব প্রজেক্ট</button>
+                <button class="filter-btn" onclick="filterProjects('js')">জাভাস্ক্রিপ্ট</button>
+                <button class="filter-btn" onclick="filterProjects('ui')">ইউআই ডিজাইন</button>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-item" data-category="js">
+                    <h3>টু-ডু লিস্ট অ্যাপ</h3>
+                    <p>লোকাল স্টোরেজ ব্যবহার করে তৈরি ডাইনামিক টাস্ক ম্যানেজার অ্যাপ।</p>
+                    <button class="project-btn" onclick="openModal('todo')">ডিটেইলস দেখুন 👁️</button>
+                </div>
+                
+                <div class="project-item" data-category="ui">
+                    <h3>যোগাযোগ ফর্ম</h3>
+                    <p>জাভাস্ক্রিপ্ট ফর্ম ভ্যালিডেশন এবং সাকসেস ফিডব্যাক মেসেজ প্রজেক্ট।</p>
+                    <button class="project-btn" onclick="openModal('contact')">ডিটেইলস দেখুন 👁️</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- প্রজেক্ট ডিটেইলস মডাল -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h2 id="modalTitle" style="color: var(--nav-bg); margin-top: 0;">প্রজেক্টের নাম</h2>
+            <div class="modal-body" id="modalDescription">
+                প্রজেক্টের বিস্তারিত তথ্য এখানে দেখানো হবে।
+            </div>
+            <a href="#" id="modalLink" class="project-btn">মূল পেজে যান 🔗</a>
+        </div>
+    </div>
+
+    <!-- ফ্লোটিং সোশ্যাল / কুইক কনটাক্ট উইজেট -->
