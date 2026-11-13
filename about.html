@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমার সম্পর্কে - প্রফেশনাল পোর্টফোলিও</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --header-bg: linear-gradient(135deg, #2c3e50, #34495e);
+            --nav-bg: #1abc9c;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --text-color: #ffffff;
+            --header-bg: linear-gradient(135deg, #0f3460, #16213e);
+            --nav-bg: #0f3460;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .theme-btn {
+            position: absolute;
+            right: 20px;
+            top: 25px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.05);
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #f1c40f;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                justify-content: space-between;
+            }
+            .hamburger {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--nav-bg);
+                text-align: center;
+                padding: 15px 0;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links a {
+                padding: 10px 0;
+            }
+        }
+
+        main {
+            padding: 50px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 40px;
+            width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: background-color 0.4s ease;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .card h2 {
+            color: var(--nav-bg);
+            margin-top: 0;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>আমার পোর্টফোলিও</h1>
+        <button class="theme-btn" onclick="toggleTheme()">🌙 মোড পরিবর্তন</button>
+    </header>
+
+    <nav>
+        <button class="hamburger" id="hamburger">☰</button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">হোম</a>
+            <a href="about.html">আমার সম্পর্কে</a>
+            <a href="contact.html">যোগাযোগ</a>
+            <a href="todo.html">টু-ডু লিস্ট</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="card">
+            <h2>আমি কে?</h2>
+            <p>আমি একজন উদীয়মান প্রফেশনাল ওয়েব ডেভেলপার। বর্তমানে আধুনিক ফ্রন্ট-এন্ড টেকনোলজি নিয়ে কাজ করছি এবং নিজের কোডিং স্কিল উন্নত করছি।</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; ২০২৬ আমার ওয়েবসাইট। সর্বস্বত্ব সংরক্ষিত।</p>
+    </footer>
+
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark-mode");
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                localStorage.setItem("theme", "dark");
+            } else {
+                localStorage.setItem("theme", "light");
+            }
+        }
+
+        const hamburger = document.getElementById("hamburger");
+        const navLinks = document.getElementById("navLinks");
+
+        hamburger.addEventListener("click", function() {
+            navLinks.classList.toggle("active");
+        });
+    </script>
+
+</body>
+</html>
